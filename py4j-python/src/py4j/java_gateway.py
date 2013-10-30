@@ -613,6 +613,7 @@ class JavaClass():
         self._fqn = fqn
         self._gateway_client = gateway_client
         self._command_header = fqn + '\n'
+        self.pool = gateway_client.gateway_property.pool
 
     def __getattr__(self, name):
         command = REFLECTION_COMMAND_NAME +\
@@ -637,7 +638,7 @@ class JavaClass():
                     format(self._fqn + name))
 
     def __call__(self, *args):
-        args_command = ''.join([get_command_part(arg) for arg in args])
+        args_command = ''.join([get_command_part(arg, self.pool) for arg in args])
         command = CONSTRUCTOR_COMMAND_NAME +\
             self._command_header +\
             args_command +\
