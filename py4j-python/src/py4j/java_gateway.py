@@ -1035,6 +1035,7 @@ class CallbackServer(object):
 
         # Maybe thread needs to be cleanup up?
         self.thread = Thread(target=self.run)
+        self.thread.daemon = True
         self.thread.start()
 
     def run(self):
